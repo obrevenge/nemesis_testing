@@ -18,6 +18,8 @@ cp -r /etc/oem-install/getty@tty1.service.d /etc/systemd/system/
 cp /etc/oem-install/.bash_profile /root/
 cp /etc/oem-install/.xinitrc /root/
 cp /etc/oem-install/.xsession /root/
+systemctl disable lightdm.service
+systemctl disable gdm.service
 halt
 }
 
