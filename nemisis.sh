@@ -497,7 +497,7 @@ if [ "$grub" = "yes" ]
             arch_chroot "grub-install --target=i386-pc $grub_device"
             arch_chroot "grub-mkconfig -o /boot/grub/grub.cfg"
         else
-            then echo "98"
+            echo "98"
 	    echo "# Installing Bootloader..."
 
 
