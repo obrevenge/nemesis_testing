@@ -21,4 +21,4 @@ cp /etc/oem-install/.xsession /root/
 halt
 }
 
-gksu configure
+configure

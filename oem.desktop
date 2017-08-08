@@ -3,6 +3,6 @@ Version=1.0
 Type=Application
 Terminal=false
 Name[en_US]=OEM Liveuser Setup Tool
-Exec=/usr/bin/liveuser.sh
+Exec=sudo /usr/bin/liveuser.sh
 Name=Revenge OS Welcome
 Comment=OEM Liveuser Setup Tool

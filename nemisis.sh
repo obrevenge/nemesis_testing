@@ -413,6 +413,7 @@ if [ "$type" = "OEM" ]
         fi
         cp -r oem-install /mnt/etc/
         cp oem-setup.sh /mnt/usr/bin/
+	cp timezone /mnt/usr/bin/
 fi
 
 if [ "$type" = "StationX OEM" ]
@@ -421,13 +422,14 @@ if [ "$type" = "StationX OEM" ]
         cp oem.desktop /mnt/etc/skel/.config/autostart/
         cp liveuser.sh /mnt/usr/bin/
         if [[ -f "/mnt/etc/skel/.config/openbox/autostart" ]];then
-        echo "liveuser.sh &" >> /mnt/etc/skel/.config/openbox/autostart
+        echo "sudo liveuser.sh &" >> /mnt/etc/skel/.config/openbox/autostart
         fi 
         if [[ -f "/mnt/etc/skel/.config/i3/config" ]];then
-        echo "exec liveuser.sh &" >> /mnt/etc/skel/.config/i3/config
+        echo "exec sudo liveuser.sh &" >> /mnt/etc/skel/.config/i3/config
         fi
         cp -r oem-install /mnt/etc/
         cp oem-setup.sh /mnt/usr/bin/
+	cp timezone /mnt/usr/bin/
         
 fi
 
@@ -447,18 +449,30 @@ if [ "$type" = "Normal" ]
     rm .passwd
 else
     arch_chroot "useradd -m -g users -G adm,lp,wheel,power,audio,video -s /bin/bash liveuser"
-    arch_chroot "passwd $username" < .passwd >/dev/null
+    arch_chroot "passwd liveuser" < .passwd >/dev/null
     rm .passwd
+    # enabling running liveuser.sh as root
+    echo "liveuser ALL=(ALL) NOPASSWD: /usr/bin/liveuser.sh" >> /mnt/etc/sudoers
 fi    
 
+
 # starting desktop manager
-if [ "$desktop" = "Gnome" ]
-    then arch_chroot "systemctl enable gdm.service"
-else
-    pacstrap /mnt lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
-    arch_chroot "systemctl enable lightdm.service"
-    echo "theme-name = BlackMATE" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
-    echo "background = /usr/share/Wallpaper/Shadow_cast-RevengeOS-v2.png" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
+if [ "$type" = "Normal" ]
+	then
+	if [ "$desktop" = "Gnome" ]
+	    then arch_chroot "systemctl enable gdm.service"
+	else
+	    pacstrap /mnt lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
+	    arch_chroot "systemctl enable lightdm.service"
+	    echo "theme-name = BlackMATE" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
+	    echo "background = /usr/share/Wallpaper/Shadow_cast-RevengeOS-v2.png" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
+	fi
+	else
+	if [ "$desktop" != "Gnome" ]
+	    then pacstrap /mnt lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
+	    echo "theme-name = BlackMATE" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
+	    echo "background = /usr/share/Wallpaper/Shadow_cast-RevengeOS-v2.png" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
+	fi
 fi
 
 # enabling network manager

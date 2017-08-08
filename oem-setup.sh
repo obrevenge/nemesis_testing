@@ -78,6 +78,9 @@ if [[ -f "/etc/skel/.config/i3/config" ]];then
 sed -i '/liveuser.sh/d' /etc/skel/.config/i3/config
 fi
 
+# fixing root's bash_profile
+sed -i '/startx/d' /root/bash_profile
+
 #adding user
 echo "# Making new user..."
 userdel -rf liveuser
