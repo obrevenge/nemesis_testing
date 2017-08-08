@@ -497,7 +497,8 @@ if [ "$grub" = "yes" ]
             arch_chroot "grub-install --target=i386-pc $grub_device"
             arch_chroot "grub-mkconfig -o /boot/grub/grub.cfg"
         else
-            echo "# Installing Bootloader..."
+            then echo "98"
+	    echo "# Installing Bootloader..."
 
 
             if [ "$ans" = "Automatic Partitioning" ]
