@@ -9,7 +9,7 @@ logo="revenge_logo_sm.png"
 config1() {
 locales=$(cat /etc/locale.gen | grep -v "#  " | sed 's/#//g' | sed 's/ UTF-8//g' | grep .UTF-8 | sort | awk '{ printf "!""\0"$0"\0" }')
 
-zones=$(cat timezone)
+zones=$(cat /etc/oem-install/timezone)
 
 yad --width=600 --height=400 --center --title="$title" --image="$logo" --text "<big>Revenge Setup</big>\n\nEnter the following to set up your system:" --form --field="Select Your Keyboard Layout:":CB --field="Select Your locale:":CB --field="Select Your Timezone:":CB --field="Use UTC or Local Time?":CB --field="Choose a hostname:" --field="Choose a username:" --field="Enter Your User Password:H" --field="Re-enter Your User Password:H" --separator=" " \
 "us!af!al!am!at!az!ba!bd!be!bg!br!bt!bw!by!ca!cd!ch!cm!cn!cz!de!dk!ee!es!et!eu!fi!fo!fr!gb!ge!gh!gn!gr!hr!hu!ie!il!in!iq!ir!is!it!jp!ke!kg!kh!kr!kz!la!lk!lt!lv!ma!md!me!mk!ml!mm!mn!mt!mv!ng!nl!no!np!pc!ph!pk!pl!pt!ro!rs!ru!se!si!sk!sn!sy!tg!th!tj!tm!tr!tw!tz!ua!uz!vn!za" "en_US.UTF-8 $locales" "$zones" "!UTC!Localtime" "" "" "" "" "yes!no" > config1.txt
