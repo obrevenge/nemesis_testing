@@ -545,7 +545,7 @@ desktop
 confirm
 vbox
 #bootloader
-#installing
+installing
 
 
 
