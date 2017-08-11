@@ -16,7 +16,8 @@ fi
 #fixing autostart for next boot
 sed -i 's/live/setup/g' /usr/share/applications/oem.desktop
 sed -i 's/live/setup/g' /root/.config/i3/config
-halt
+sed -i 's/openbox-session/oem-setup setup/g' /root/.xinitrc
+shutdown -n
 }
 
 

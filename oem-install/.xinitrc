@@ -13,4 +13,4 @@ fi
 
 /usr/bin/VBoxClient-all
 
-exec oem-setup.sh
+exec openbox-session
