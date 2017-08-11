@@ -442,10 +442,10 @@ if [ "$type" = "Normal" ]
     rm .passwd
 else
     mkdir -p /etc/systemd/system
-    cp -r /etc/oem-install/getty@tty1.service.d /etc/systemd/system/
-    cp -f /etc/oem-install/.bash_profile /root/
-    cp -f /etc/oem-install/.xinitrc /root/
-    cp -f /etc/oem-install/.xsession /root/
+    cp -r /mnt/etc/oem-install/getty@tty1.service.d /mnt/etc/systemd/system/
+    cp -f /mnt/etc/oem-install/.bash_profile /mnt/root/
+    cp -f /mnt/etc/oem-install/.xinitrc /mnt/root/
+    cp -f /mnt/etc/oem-install/.xsession /mnt/root/
 fi    
 
 

@@ -16,7 +16,7 @@ fi
 #fixing autostart for next boot
 sed -i 's/live/setup/g' /usr/share/applications/oem.desktop
 sed -i 's/live/setup/g' /root/.config/i3/config
-sed -i 's/openbox-session/oem-setup setup/g' /root/.xinitrc
+sed -i 's/openbox-session/oem-setup.sh setup/g' /root/.xinitrc
 shutdown -n
 }
 
@@ -68,8 +68,7 @@ echo -e 'Section "InputClass"\n	Identifier "system-keyboard"\n	MatchIsKeyboard "
 
 # setting timezone
 echo "# Setting Timezone..."
-rm /etc/localtime
-ln -s /usr/share/zoneinfo/${zone}/${subzone} /etc/localtime
+timedatectl set-timezone $zone
 
 #setting hw clock
 echo "# Setting System Clock..."
