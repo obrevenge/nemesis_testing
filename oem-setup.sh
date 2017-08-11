@@ -4,9 +4,24 @@
 # after an OEM install.
 
 title="Revenge OS OEM Setup"
-logo="revenge_logo_sm.png"
+logo="/usr/share/Icons/revenge_logo.png"
 
-config1() {
+live() {
+zenity --question --title="Revenge OEM Install Setup" --text "When you are finished with any setup\nthat you would like to do, please select 'yes'. You may minimize this dialog, or even reboot as many times as needed.\nThis dialog will show on each reboot until 'yes' is selected.\nWhen you select 'yes', the setup for the end user\nwill start on the next boot.\n\nYou can now made any additional configurations or install any\nadditional software that you would like." --height=50
+
+if [ $? = "1" ]
+    then exit
+fi
+
+#fixing autostart for next boot
+sed -i 's/live/setup/g' /usr/share/applications/oem.desktop
+sed -i 's/live/setup/g' /root/.config/i3/config
+halt
+}
+
+
+
+setup() {
 locales=$(cat /etc/locale.gen | grep -v "#  " | sed 's/#//g' | sed 's/ UTF-8//g' | grep .UTF-8 | sort | awk '{ printf "!""\0"$0"\0" }')
 
 zones=$(cat /etc/oem-install/timezone)
@@ -32,10 +47,10 @@ if [ "$rtpasswd1" != "$rtpasswd2" ]
         then zenity --error --title="$title" --text "The passwords did not match, please try again." --height=40
         config1
 fi
-}
 
 
-setup() {
+
+
 # generating locale
 (echo "# Generating Locale..."
 rm -f /etc/locale.conf
@@ -124,6 +139,12 @@ fi
 
 
 # execution
-config1
-setup
+
+if [ "$1" = "live" ]
+    then live
+    else setup
+fi
+
+
+
 

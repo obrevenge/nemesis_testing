@@ -295,7 +295,7 @@ auto_partition() {
 }
 
 installing() {
-(
+
 if [ "$part" == "Automatic" ]
     then echo "10"
     echo "# Paritioning Disk..."
@@ -392,6 +392,9 @@ elif [ "$desktop" = "i3" ]
     sed -i "s|zone|${zone}/${subzone}|g" /mnt/etc/skel/.config/i3status/config
 fi
 
+# fix theme for applications running as root
+cp -r /mnt/etc/skel/. /mnt/root/
+
 #root password
 echo "85"
 echo "# Setting root password..."
@@ -404,32 +407,22 @@ if [ "$type" = "OEM" ]
     then # setting oem script for autostart
         mkdir -p /mnt/etc/skel/.config/autostart
         cp oem.desktop /mnt/etc/skel/.config/autostart/
-        cp liveuser.sh /mnt/usr/bin/
-        if [[ -f "/mnt/etc/skel/.config/openbox/autostart" ]];then
-        echo "liveuser.sh &" >> /mnt/etc/skel/.config/openbox/autostart
-        fi 
         if [[ -f "/mnt/etc/skel/.config/i3/config" ]];then
-        echo "exec liveuser.sh &" >> /mnt/etc/skel/.config/i3/config
+        echo "exec sudo oem-setup.sh live &" >> /mnt/etc/skel/.config/i3/config
         fi
         cp -r oem-install /mnt/etc/
         cp oem-setup.sh /mnt/usr/bin/
-	cp timezone /mnt/usr/bin/
 fi
 
 if [ "$type" = "StationX OEM" ]
     then # setting oem script for autostart
         mkdir -p /mnt/etc/skel/.config/autostart
         cp oem.desktop /mnt/etc/skel/.config/autostart/
-        cp liveuser.sh /mnt/usr/bin/
-        if [[ -f "/mnt/etc/skel/.config/openbox/autostart" ]];then
-        echo "sudo liveuser.sh &" >> /mnt/etc/skel/.config/openbox/autostart
-        fi 
         if [[ -f "/mnt/etc/skel/.config/i3/config" ]];then
-        echo "exec sudo liveuser.sh &" >> /mnt/etc/skel/.config/i3/config
+        echo "exec sudo oem-setup.sh live &" >> /mnt/etc/skel/.config/i3/config
         fi
         cp -r oem-install /mnt/etc/
         cp oem-setup.sh /mnt/usr/bin/
-	cp timezone /mnt/usr/bin/
         
 fi
 
@@ -448,30 +441,30 @@ if [ "$type" = "Normal" ]
     arch_chroot "passwd $username" < .passwd >/dev/null
     rm .passwd
 else
-    arch_chroot "useradd -m -g users -G adm,lp,wheel,power,audio,video -s /bin/bash liveuser"
-    arch_chroot "passwd liveuser" < .passwd >/dev/null
-    rm .passwd
-    # enabling running liveuser.sh as root
-    echo "liveuser ALL=(ALL) NOPASSWD: /usr/bin/liveuser.sh" >> /mnt/etc/sudoers
+    mkdir -p /etc/systemd/system
+    cp -r /etc/oem-install/getty@tty1.service.d /etc/systemd/system/
+    cp -f /etc/oem-install/.bash_profile /root/
+    cp -f /etc/oem-install/.xinitrc /root/
+    cp -f /etc/oem-install/.xsession /root/
 fi    
 
 
 # starting desktop manager
-if [ "$desktop" = "Gnome" ]
-    then arch_chroot "systemctl enable gdm.service"
-else
-    pacstrap /mnt lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
-    arch_chroot "systemctl enable lightdm.service"
-    echo "theme-name = BlackMATE" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
-    echo "background = /usr/share/Wallpaper/Shadow_cast-RevengeOS-v2.png" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
-fi
+if [ "$type" = "Normal" ];then
 
+    if [ "$desktop" = "Gnome" ]
+        then arch_chroot "systemctl enable gdm.service"
+    else
+        pacstrap /mnt lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
+        arch_chroot "systemctl enable lightdm.service"
+        echo "theme-name = BlackMATE" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
+        echo "background = /usr/share/Wallpaper/Shadow_cast-RevengeOS-v2.png" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
+    fi
+fi
 
 # enabling network manager
 arch_chroot "systemctl enable NetworkManager"
 
-# fix theme for applications running as root
-cp -r /mnt/etc/skel/. /mnt/root/
 
 # fixing revenge branding
 rm -f /mnt/etc/os-release
@@ -522,7 +515,6 @@ fi
 umount -R /mnt
 
 echo "# Installation Finished!" 
-) | zenity --progress --title="$title" --width=450 --no-cancel
 }
 
 # System Detection
