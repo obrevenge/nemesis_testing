@@ -14,13 +14,6 @@ greeting() {
 
     type=` cat answer.txt | awk '{print $1;}' `
     
-if [ "$type" = "Normal" ]
-    then echo "normal"
-elif [ "$type" = "OEM" ]
-    then echo "oem"
-else
-    exit
-fi
 }
                                                    
 partitions() {
