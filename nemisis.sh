@@ -437,8 +437,9 @@ else
     cp -f /mnt/etc/oem-install/.xinitrc /mnt/root/
     cp -f /mnt/etc/oem-install/.xsession /mnt/root/
     mkdir -p /root/.config/autostart
+    cp oem.desktop /mnt/root/.config/autostart/
     if [[ -f "/mnt/root/.config/i3/config" ]];then
-    echo "exec sudo oem-setup.sh live &" >> /mnt/etc/root/i3/config
+    echo "exec sudo oem-setup.sh live &" >> /mnt/etc/root/.config/i3/config
     fi
 
     if [ "$desktop" = "Gnome" ]

@@ -17,6 +17,11 @@ fi
 sed -i 's/live/setup/g' /usr/share/applications/oem.desktop
 sed -i 's/live/setup/g' /root/.config/i3/config
 sed -i 's/openbox-session/oem-setup.sh setup/g' /root/.xinitrc
+sed -i 's/gnome-session/oem-setup.sh setup/g' /root/.xinitrc
+sed -i 's/mate-session/oem-setup.sh setup/g' /root/.xinitrc
+sed -i 's/i3/oem-setup.sh setup/g' /root/.xinitrc
+sed -i 's/startkde/oem-setup.sh setup/g' /root/.xinitrc
+sed -i 's/startxfce4/oem-setup.sh setup/g' /root/.xinitrc
 poweroff
 }
 
