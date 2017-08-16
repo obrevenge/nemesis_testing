@@ -300,7 +300,7 @@ auto_partition() {
 installing() {
 
 if [ "$part" == "Automatic" ]
-    auto_partition
+    then auto_partition
 fi
 
 # sorting pacman mirrors
