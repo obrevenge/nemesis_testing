@@ -17,7 +17,7 @@ fi
 sed -i 's/live/setup/g' /usr/share/applications/oem.desktop
 sed -i 's/live/setup/g' /root/.config/i3/config
 sed -i 's/openbox-session/oem-setup.sh setup/g' /root/.xinitrc
-shutdown -n
+poweroff
 }
 
 
@@ -127,10 +127,10 @@ rm -rf /etc/oem-install
 # starting the DM
 if [ "$desktop" = "Gnome" ]
     then systemctl enable gdm.service
-         systemctl start gdm.service
+         reboot
 else
     systemctl enable lightdm.service
-    systemctl start lightdm.service
+    reboot
 fi
 
 }

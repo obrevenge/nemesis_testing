@@ -405,22 +405,12 @@ arch_chroot "passwd root" < .passwd >/dev/null
 # autostart for normal or oem
 if [ "$type" = "OEM" ]
     then # setting oem script for autostart
-        mkdir -p /mnt/etc/skel/.config/autostart
-        cp oem.desktop /mnt/etc/skel/.config/autostart/
-        if [[ -f "/mnt/etc/skel/.config/i3/config" ]];then
-        echo "exec sudo oem-setup.sh live &" >> /mnt/etc/skel/.config/i3/config
-        fi
         cp -r oem-install /mnt/etc/
         cp oem-setup.sh /mnt/usr/bin/
 fi
 
 if [ "$type" = "StationX OEM" ]
     then # setting oem script for autostart
-        mkdir -p /mnt/etc/skel/.config/autostart
-        cp oem.desktop /mnt/etc/skel/.config/autostart/
-        if [[ -f "/mnt/etc/skel/.config/i3/config" ]];then
-        echo "exec sudo oem-setup.sh live &" >> /mnt/etc/skel/.config/i3/config
-        fi
         cp -r oem-install /mnt/etc/
         cp oem-setup.sh /mnt/usr/bin/
         
@@ -446,6 +436,23 @@ else
     cp -f /mnt/etc/oem-install/.bash_profile /mnt/root/
     cp -f /mnt/etc/oem-install/.xinitrc /mnt/root/
     cp -f /mnt/etc/oem-install/.xsession /mnt/root/
+    mkdir -p /root/.config/autostart
+    if [[ -f "/mnt/root/.config/i3/config" ]];then
+    echo "exec sudo oem-setup.sh live &" >> /mnt/etc/root/i3/config
+    fi
+
+    if [ "$desktop" = "Gnome" ]
+    	then sed -i 's/openbox-session/gnome-session/g' /mnt/root/.xinitrc
+    elif [ "$desktop" = "Plasma" ]
+        then sed -i 's/openbox-session/startkde/g' /mnt/root/.xinitrc
+    elif [ "$desktop" = "XFCE" ]
+        then sed -i 's/openbox-session/startxfce4/g' /mnt/root/.xinitrc
+    elif [ "$desktop" = "Mate" ]
+        then sed -i 's/openbox-session/mate-session/g' /mnt/root/.xinitrc
+    elif [ "$desktop" = "i3" ]
+        then sed -i 's/openbox-session/i3/g' /mnt/root/.xinitrc
+    fi
+
 fi    
 
 
@@ -483,11 +490,11 @@ if [ "$grub" = "yes" ]
         if [ "$SYSTEM" = 'BIOS' ]
             then echo "98"
 	    echo "# Installing Bootloader..."
-            pacstrap /mnt grub
+            pacstrap /mnt grub os-prober
 	    # fixing grub theme
 	    echo "GRUB_DISTRIBUTOR='Revenge OS'" >> /mnt/etc/default/grub
 	    echo 'GRUB_BACKGROUND="/usr/share/Wallpaper/Shadow_cast-RevengeOS.png"' >> /mnt/etc/default/grub
-            arch_chroot "grub-install --target=i386-pc $grub_device"
+            arch_chroot "grub-install --target=i386-pc --recheck --force --debug $grub_device"
             arch_chroot "grub-mkconfig -o /boot/grub/grub.cfg"
         else
             echo "98"
