@@ -184,6 +184,16 @@ config2() {
             config2
     fi
 
+    if [[ "$username" =~ [:upper:] ]];then
+	    zenity --error --title="$title" --text "Your username must be in all lowercase, please try again." --height=40
+            config2
+    fi
+
+    if [[ "$hname" =~ [:upper:] ]];then
+	    zenity --error --title="$title" --text "Your hostname must be in all lowercase, please try again." --height=40
+            config2
+    fi
+
     lsblk -lno NAME,TYPE | grep 'disk' | awk '{print "/dev/" $1 " " $2}' | sort -u > devices.txt
 sed -i 's/\<disk\>//g' devices.txt
 devices=` awk '{print "FALSE " $0}' devices.txt `
