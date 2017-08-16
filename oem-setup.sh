@@ -51,7 +51,17 @@ rm config1.txt
 
 if [ "$rtpasswd1" != "$rtpasswd2" ]
         then zenity --error --title="$title" --text "The passwords did not match, please try again." --height=40
-        config1
+        setup
+fi
+
+if [[ "$username" =~ [A-Z] ]];then
+	zenity --error --title="$title" --text "Your username must be in all lowercase, please try again." --height=40
+        setup
+fi
+
+if [[ "$hname" =~ [A-Z] ]];then
+	zenity --error --title="$title" --text "Your hostname must be in all lowercase, please try again." --height=40
+        setup
 fi
 
 
@@ -119,7 +129,7 @@ fi
 
 
 echo "# Configuration Finished!" 
-) | zenity --progress --title="$title" --width=450 --no-cancel
+) | zenity --progress --title="$title" --width=450 --no-cancel --pulsate
 
 # removing files for oem install and configuration
 rm -f /usr/bin/liveuser.sh
