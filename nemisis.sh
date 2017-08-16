@@ -412,7 +412,7 @@ if [ "$type" = "OEM" ]
         cp oem-setup.sh /mnt/usr/bin/
 fi
 
-if [ "$type" = "StationX OEM" ]
+if [ "$type" = "StationX" ]
     then # setting oem script for autostart
         cp -r oem-install /mnt/etc/
         cp oem-setup.sh /mnt/usr/bin/
@@ -487,7 +487,7 @@ echo "95"
 echo "# Running mkinitcpio..."
 arch_chroot "mkinitcpio -p linux"
 
-if [ "$type" = "StationX OEM" ]
+if [ "$type" = "StationX" ]
     then # installing stationx wallpapers
 	pacstrap /mnt revenge-stationx-wallpapers
 fi
@@ -501,7 +501,7 @@ if [ "$grub" = "yes" ]
             pacstrap /mnt grub os-prober
 	    # fixing grub theme
 	    echo "GRUB_DISTRIBUTOR='Revenge OS'" >> /mnt/etc/default/grub
-	    if [ "$type" = "StationX OEM" ]
+	    if [ "$type" = "StationX" ]
 		then echo 'GRUB_BACKGROUND="/usr/share/Wallpaper/Shadow_cast-StationX.png"' >> /mnt/etc/default/grub
 		else
 	    	     echo 'GRUB_BACKGROUND="/usr/share/Wallpaper/Shadow_cast-RevengeOS.png"' >> /mnt/etc/default/grub
@@ -520,7 +520,7 @@ if [ "$grub" = "yes" ]
             pacstrap /mnt grub efibootmgr
             # fixing grub theme
             echo "GRUB_DISTRIBUTOR='Revenge OS'" >> /mnt/etc/default/grub
-            if [ "$type" = "StationX OEM" ]
+            if [ "$type" = "StationX" ]
 		then echo 'GRUB_BACKGROUND="/usr/share/Wallpaper/Shadow_cast-StationX.png"' >> /mnt/etc/default/grub
 		else
 	    	     echo 'GRUB_BACKGROUND="/usr/share/Wallpaper/Shadow_cast-RevengeOS.png"' >> /mnt/etc/default/grub
@@ -534,7 +534,7 @@ if [ "$grub" = "yes" ]
 fi  
 
 
-if [ "$type" = "StationX OEM" ]
+if [ "$type" = "StationX" ]
     then # setting stationx wallpapers
         if [ "$desktop" = "Plasma" ]
 		then sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc
@@ -558,6 +558,11 @@ echo "# Installation Finished!"
 if [ "$type" = "OEM" ];then
 	zenity --info --height=40 --text "When you reboot the system you will be auto-logged in as root.\nYou may install any extra packages, or make\nany extra cofigurations that you like.\nWhen you are finished, either click the dialog box that appears on boot,\n or run 'oem-setup live' in a terminal to finalize\nthe install and prepare for the end user's first boot."
 fi
+
+if [ "$type" = "StationX" ];then
+	zenity --info --height=40 --text "When you reboot the system you will be auto-logged in as root.\nYou may install any extra packages, or make\nany extra cofigurations that you like.\nWhen you are finished, either click the dialog box that appears on boot,\n or run 'oem-setup live' in a terminal to finalize\nthe install and prepare for the end user's first boot."
+fi
+
 }
 
 # System Detection
