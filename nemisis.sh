@@ -10,7 +10,7 @@ rm .passwd
 title="Nemesis Installer"
 
 greeting() {
-    yad --width=600 --height=400 --center --title="$title" --image="crosshairs.png" --image-on-top --form --field=" ":LBL --image-on-top --field="<big>Welcome to the Nemesis Installer</big>\n\nThank you for Choosing a Revenge OS System. Click Okay to Get Started":LBL --field="Type of Installation":CB --separator=" " "" "" "Normal!OEM" > answer.txt
+    yad --width=600 --height=400 --center --title="$title" --image="crosshairs.png" --image-on-top --form --field=" ":LBL --image-on-top --field="<big>Welcome to the Nemesis Installer</big>\n\nThank you for Choosing a Revenge OS System. Click Okay to Get Started":LBL --field="Type of Installation":CB --separator=" " "" "" "Normal!OEM!StationX OEM" > answer.txt
 
     type=` cat answer.txt | awk '{print $1;}' `
     
@@ -364,7 +364,7 @@ echo "%wheel ALL=(ALL) ALL" >> /mnt/etc/sudoers
 # installing video and audio packages
 echo "70"
 echo "# Installing Sound, and Video Drivers..."
-pacstrap /mnt  mesa xorg-server xorg-apps xorg-xinit xorg-drivers xterm alsa-utils pulseaudio pulseaudio-alsa xf86-input-synaptics xf86-input-keyboard xf86-input-mouse xf86-input-libinput intel-ucode b43-fwcutter networkmanager nm-connection-editor network-manager-applet polkit-gnome gksu ttf-dejavu gnome-keyring xdg-user-dirs gvfs libmtp gvfs-mtp wpa_supplicant dialog iw reflector rsync mlocate bash-completion htop unrar p7zip yad yaourt polkit-gnome lynx wget zenity gksu squashfs-tools ntfs-3g gptfdisk cups ghostscript gsfonts linux-headers dkms broadcom-wl-dkms
+pacstrap /mnt  mesa xorg-server xorg-apps xorg-xinit xorg-drivers xterm alsa-utils pulseaudio pulseaudio-alsa xf86-input-synaptics xf86-input-keyboard xf86-input-mouse xf86-input-libinput intel-ucode b43-fwcutter networkmanager nm-connection-editor network-manager-applet polkit-gnome gksu ttf-dejavu gnome-keyring xdg-user-dirs gvfs libmtp gvfs-mtp wpa_supplicant dialog iw reflector rsync mlocate bash-completion htop unrar p7zip yad yaourt polkit-gnome lynx wget zenity gksu squashfs-tools ntfs-3g gptfdisk cups ghostscript gsfonts linux-headers dkms broadcom-wl-dkms revenge-lsb-release
 
 # virtualbox
 if [ "$vbox" = "yes" ]
@@ -436,6 +436,7 @@ else
     cp -f /mnt/etc/oem-install/.bash_profile /mnt/root/
     cp -f /mnt/etc/oem-install/.xinitrc /mnt/root/
     cp -f /mnt/etc/oem-install/.xsession /mnt/root/
+    cp -f /mnt/etc/oem-install/.Xresources /mnt/root/
     mkdir -p /mnt/root/.config/autostart
     cp oem.desktop /mnt/root/.config/autostart/
     if [[ -f "/mnt/root/.config/i3/config" ]];then
@@ -477,13 +478,16 @@ arch_chroot "systemctl enable NetworkManager"
 # fixing revenge branding
 rm -f /mnt/etc/os-release
 cp os-release /mnt/etc/os-release
-rm -f /mnt/etc/lsb-release
-cp lsb-release /mnt/etc/lsb-release
 
 # running mkinit
 echo "95"
 echo "# Running mkinitcpio..."
 arch_chroot "mkinitcpio -p linux"
+
+if [ "$type" = "StationX OEM" ]
+    then # installing stationx wallpapers
+	pacstrap /mnt revenge-stationx-wallpapers
+fi
 
 # installing bootloader
 if [ "$grub" = "yes" ]
@@ -494,7 +498,11 @@ if [ "$grub" = "yes" ]
             pacstrap /mnt grub os-prober
 	    # fixing grub theme
 	    echo "GRUB_DISTRIBUTOR='Revenge OS'" >> /mnt/etc/default/grub
-	    echo 'GRUB_BACKGROUND="/usr/share/Wallpaper/Shadow_cast-RevengeOS.png"' >> /mnt/etc/default/grub
+	    if [ "$type" = "StationX OEM" ]
+		then echo 'GRUB_BACKGROUND="/usr/share/Wallpaper/Shadow_cast-StationX.png"' >> /mnt/etc/default/grub
+		else
+	    	     echo 'GRUB_BACKGROUND="/usr/share/Wallpaper/Shadow_cast-RevengeOS.png"' >> /mnt/etc/default/grub
+	    fi
             arch_chroot "grub-install --target=i386-pc --recheck --force --debug $grub_device"
             arch_chroot "grub-mkconfig -o /boot/grub/grub.cfg"
         else
@@ -509,7 +517,11 @@ if [ "$grub" = "yes" ]
             pacstrap /mnt grub efibootmgr
             # fixing grub theme
             echo "GRUB_DISTRIBUTOR='Revenge OS'" >> /mnt/etc/default/grub
-            echo 'GRUB_BACKGROUND="/usr/share/Wallpaper/Shadow_cast-RevengeOS.png"' >> /mnt/etc/default/grub
+            if [ "$type" = "StationX OEM" ]
+		then echo 'GRUB_BACKGROUND="/usr/share/Wallpaper/Shadow_cast-StationX.png"' >> /mnt/etc/default/grub
+		else
+	    	     echo 'GRUB_BACKGROUND="/usr/share/Wallpaper/Shadow_cast-RevengeOS.png"' >> /mnt/etc/default/grub
+	    fi
             arch_chroot "grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub"
             arch_chroot "grub-mkconfig -o /boot/grub/grub.cfg"
             # additional fix for virtualbox efi boot
@@ -517,6 +529,22 @@ if [ "$grub" = "yes" ]
             cp /mnt/boot/EFI/grub/grubx64.efi /mnt/boot/EFI/BOOT/BOOTX64.EFI
         fi
 fi  
+
+
+if [ "$type" = "StationX OEM" ]
+    then # setting stationx wallpapers
+        if [ "$desktop" = "Plasma" ]
+		then sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc
+		sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/root/.config/plasma-org.kde.plasma.desktop-appletsrc
+	else
+		then sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/etc/skel/.config/nitrogen/bg-saved.cfg
+		then sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/root/.config/nitrogen/bg-saved.cfg
+		echo "theme-name = BlackMATE" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
+        	echo "background = /usr/share/Wallpaper/Behind_the_scenes-StationX-v2.png" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
+
+	fi
+        
+fi
 
 
 # unmounting partitions
