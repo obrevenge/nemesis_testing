@@ -4,5 +4,5 @@ Type=Application
 Terminal=false
 Name[en_US]=OEM Liveuser Setup Tool
 Exec=oem-setup.sh live
-Name=Revenge OS Welcome
+Name=OEM Liveuser Setup Tool
 Comment=OEM Liveuser Setup Tool

@@ -388,7 +388,7 @@ elif [ "$desktop" = "XFCE" ]
 elif [ "$desktop" = "Mate" ]
     then pacstrap /mnt mate mate-extra mate-revenge-desktop mate-tweak brisk-menu plank mate-applet-dock mate-menu mate-netbook synapse tilda topmenu-gtk blueman metacity
 elif [ "$desktop" = "i3" ]
-    then pacstrap /mnt i3-revenge-desktop
+    then pacstrap /mnt i3-revenge-desktop lxsession
     sed -i "s|zone|${zone}/${subzone}|g" /mnt/etc/skel/.config/i3status/config
 fi
 
@@ -436,7 +436,7 @@ else
     cp -f /mnt/etc/oem-install/.bash_profile /mnt/root/
     cp -f /mnt/etc/oem-install/.xinitrc /mnt/root/
     cp -f /mnt/etc/oem-install/.xsession /mnt/root/
-    mkdir -p /root/.config/autostart
+    mkdir -p /mnt/root/.config/autostart
     cp oem.desktop /mnt/root/.config/autostart/
     if [[ -f "/mnt/root/.config/i3/config" ]];then
     echo "exec sudo oem-setup.sh live &" >> /mnt/etc/root/.config/i3/config
