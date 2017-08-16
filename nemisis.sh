@@ -547,8 +547,8 @@ if [ "$type" = "StationX OEM" ]
 		then sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc
 		sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/root/.config/plasma-org.kde.plasma.desktop-appletsrc
 	else
-		then sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/etc/skel/.config/nitrogen/bg-saved.cfg
-		then sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/root/.config/nitrogen/bg-saved.cfg
+		sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/etc/skel/.config/nitrogen/bg-saved.cfg
+		sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/root/.config/nitrogen/bg-saved.cfg
 		echo "theme-name = BlackMATE" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
         	echo "background = /usr/share/Wallpaper/Behind_the_scenes-StationX-v2.png" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
 
