@@ -118,15 +118,6 @@ useradd -m -g users -G adm,lp,wheel,power,audio,video -s /bin/bash $username
 passwd $username < .passwd >/dev/null
 rm .passwd
 
-# starting desktop manager
-if [ "$desktop" = "Gnome" ]
-    then systemctl enable gdm.service
-else
-    arch_chroot systemctl enable lightdm.service
-    echo "theme-name = BlackMATE" >> /etc/lightdm/lightdm-gtk-greeter.conf
-    echo "background = /usr/share/Wallpaper/Shadow_cast-RevengeOS-v2.png" >> /etc/lightdm/lightdm-gtk-greeter.conf
-fi
-
 
 echo "# Configuration Finished!" 
 ) | zenity --progress --title="$title" --width=450 --no-cancel --pulsate
