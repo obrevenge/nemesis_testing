@@ -177,12 +177,12 @@ config2() {
             config2
     fi
 
-    if [[ "$username" =~ [:upper:] ]];then
+    if [[ "$username" =~ [A-Z] ]];then
 	    zenity --error --title="$title" --text "Your username must be in all lowercase, please try again." --height=40
             config2
     fi
 
-    if [[ "$hname" =~ [:upper:] ]];then
+    if [[ "$hname" =~ [A-Z] ]];then
 	    zenity --error --title="$title" --text "Your hostname must be in all lowercase, please try again." --height=40
             config2
     fi
