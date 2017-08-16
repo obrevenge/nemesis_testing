@@ -561,6 +561,10 @@ fi
 umount -R /mnt
 
 echo "# Installation Finished!" 
+
+if [ "$type" = "OEM" ];then
+	zenity --info --height=40 --text "When you reboot the system you will be auto-logged in as root.\nYou may install any extra packages, or make\nany extra cofigurations that you like.\nWhen you are finished, either click the dialog box that appears on boot,\n or run 'oem-setup live' in a terminal to finalize\nthe install and prepare for the end user's first boot."
+fi
 }
 
 # System Detection
