@@ -516,7 +516,7 @@ if [ "$type" = "StationX" ]
 		sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/root/.config/nitrogen/bg-saved.cfg
 		echo "theme-name = BlackMATE" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
         	echo "background = /usr/share/Wallpaper/Behind_the_scenes-StationX-v2.png" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
-
+                echo "position = 23%,center 46%,center" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
 	fi
         
 fi
