@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-#  cnchi.py
+#  nemesis.py
 #
 #
 #  This file is part of Nemesis.
