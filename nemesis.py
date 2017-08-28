@@ -487,7 +487,6 @@ class MyWindow(Gtk.Window):
     def on_p6next_button_clicked(self, widget):
         self.notebook.next_page()
 
-        
         self.progressbar.set_text("Starting")
         self.progressbar.set_show_text("some_text")
         self.progressbar.set_fraction(0.1)
@@ -548,7 +547,7 @@ class MyWindow(Gtk.Window):
 
         self.notebook.next_page()
 
-        f = open("nemesis.conf", "a")
+        f = open("resources/nemesis.conf", "a")
         f.write( "hname='" + hname + "'\n")
         f.write( "username='" + username + "'\n")
         f.write( "rtpasswd1='" + password1 + "'\n")
@@ -565,7 +564,7 @@ class MyWindow(Gtk.Window):
             desktop = model[tree_iter][0]
             print(desktop)
 
-        f = open("nemesis.conf", "a")
+        f = open("resources/nemesis.conf", "a")
         f.write( "desktop='" + desktop + "'\n")
 
         f.close()
@@ -622,7 +621,7 @@ class MyWindow(Gtk.Window):
             keyboard = model[tree_iter][0]
             print(keyboard)
 
-        f = open("nemesis.conf", "a")
+        f = open("resources/nemesis.conf", "a")
         f.write( "locale='" + locale + "'\n")
         f.write( "key='" + keyboard + "'\n")
         f.write( "timezone='" + timezone + "'\n")
@@ -696,7 +695,7 @@ class MyWindow(Gtk.Window):
         self.notebook.next_page()
         print(part)
 
-        f = open("nemesis.conf", "a")
+        f = open("resources/nemesis.conf", "a")
         f.write( "part='" + part + "'\n")
 
         f.close()
@@ -716,7 +715,7 @@ class MyWindow(Gtk.Window):
         else:
             bootloader = 'No'
 
-        f = open("nemesis.conf", "a")
+        f = open("resources/nemesis.conf", "a")
         f.write( "grub='" + bootloader + "'\n")
 
         f.close()
@@ -730,7 +729,7 @@ class MyWindow(Gtk.Window):
         self.notebook.next_page()
         print(install_type)
 
-        f = open("nemesis.conf", "w")
+        f = open("resources/nemesis.conf", "w")
         f.write( "type='" + install_type + "'\n")
 
         f.close()
