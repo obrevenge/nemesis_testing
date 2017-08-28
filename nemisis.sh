@@ -304,13 +304,18 @@ if [ "$part" == "Automatic" ]
 fi
 
 # sorting pacman mirrors
+echo "15"
+echo "# Sorting fastest pacman mirrors..."
 reflector --verbose -l 50 -p http --sort rate --save /etc/pacman.d/mirrorlist
 
 # updating pacman cache
+echo "# Updating Pacman Cache..."
 pacman -Syy
 arch_chroot "pacman -Syy"
 
 #installing base
+echo "20"
+echo "# Installing Base..."
 pacstrap /mnt base base-devel
 
 #fixing pacman.conf
@@ -319,6 +324,8 @@ cp /etc/pacman.conf /mnt/etc/pacman.conf
 
 
 #generating fstab
+echo "50"
+echo "# Generating File System Table..."
 genfstab -p /mnt >> /mnt/etc/fstab
 if grep -q "/mnt/swapfile" "/mnt/etc/fstab"; then
 sed -i '/swapfile/d' /mnt/etc/fstab
@@ -336,6 +343,8 @@ mkdir -p /mnt/etc/X11/xorg.conf.d/
 echo -e 'Section "InputClass"\n	Identifier "system-keyboard"\n	MatchIsKeyboard "on"\n	Option "XkbLayout" "'$key'"\n	Option "XkbModel" "'$model'"\n	Option "XkbVariant" ",'$variant'"\n	 Option "XkbOptions" "grp:alt_shift_toggle"\nEndSection' > /mnt/etc/X11/xorg.conf.d/00-keyboard.conf
 
 #setting timezone
+echo "60"
+echo "# Setting Timezone..."
 arch_chroot "rm /etc/localtime"
 arch_chroot "ln -s /usr/share/zoneinfo/${zone}/${subzone} /etc/localtime"
 
@@ -349,6 +358,8 @@ arch_chroot "echo $hname > /etc/hostname"
 echo "%wheel ALL=(ALL) ALL" >> /mnt/etc/sudoers
 
 # installing video and audio packages
+echo "70"
+echo "# Installing Sound, and Video Drivers..."
 pacstrap /mnt  mesa xorg-server xorg-apps xorg-xinit xorg-drivers xterm alsa-utils pulseaudio pulseaudio-alsa xf86-input-synaptics xf86-input-keyboard xf86-input-mouse xf86-input-libinput intel-ucode b43-fwcutter networkmanager nm-connection-editor network-manager-applet polkit-gnome gksu ttf-dejavu gnome-keyring xdg-user-dirs gvfs libmtp gvfs-mtp wpa_supplicant dialog iw reflector rsync mlocate bash-completion htop unrar p7zip yad yaourt polkit-gnome lynx wget zenity gksu squashfs-tools ntfs-3g gptfdisk cups ghostscript gsfonts linux-headers dkms broadcom-wl-dkms revenge-lsb-release
 
 # virtualbox
@@ -358,6 +369,8 @@ if [ "$vbox" = "yes" ]
 fi
 
 # installing chosen desktop
+echo "80"
+echo "# Installing Chosen Desktop..."
 if [ "$desktop" = "Gnome" ]
     then pacstrap /mnt gnome gnome-extra gnome-revenge-desktop
     # setting xorg as default session
@@ -402,6 +415,8 @@ mkdir -p /mnt/etc/skel/.config/autostart
 cp obwelcome.desktop /mnt/etc/skel/.config/autostart/
 
 # adding user depending on type of install
+echo "90"
+echo "# Making new user..."
 if [ "$type" = "Normal" ]
     then
     arch_chroot "useradd -m -g users -G adm,lp,wheel,power,audio,video -s /bin/bash $username"
@@ -456,6 +471,8 @@ rm -f /mnt/etc/os-release
 cp os-release /mnt/etc/os-release
 
 # running mkinit
+echo "95"
+echo "# Running mkinitcpio..."
 arch_chroot "mkinitcpio -p linux"
 
 if [ "$type" = "StationX" ]
@@ -524,6 +541,8 @@ fi
 # unmounting partitions
 umount -R /mnt
 
+echo "# Installation Finished!" 
+
 }
 
 # System Detection
@@ -553,7 +572,7 @@ desktop
 confirm
 vbox
 #bootloader
-(installing) | zenity --progress --title="$title" --text "Installing the System..." --no-cancel --pulsate --width=450
+(installing) | zenity --progress --title="$title" --width=450 --no-cancel
 
 if [ "$type" = "StationX" ];then
 	zenity --info --height=40 --text "When you reboot the system you will be auto-logged in as root.\nYou may install any extra packages, or make\nany extra cofigurations that you like.\nWhen you are finished, either click the dialog box that appears on boot,\n or run 'oem-setup live' in a terminal to finalize\nthe install and prepare for the end user's first boot."
