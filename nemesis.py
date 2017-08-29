@@ -359,7 +359,7 @@ class MyWindow(Gtk.Window):
         self.p4box2.pack_start(self.desktop_image, True, True, 0)
 
 
-        self.notebook.append_page(self.page4, Gtk.Label("Dekstop"))
+        self.notebook.append_page(self.page4, Gtk.Label("Desktop"))
 
 
         # starting page 5
