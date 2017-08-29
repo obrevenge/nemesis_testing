@@ -550,6 +550,7 @@ class MyWindow(Gtk.Window):
             subprocess.call("pacstrap /mnt $(cat pkg_list/obr_pkges)", shell=True)
         elif desktop == "Gnome":
             subprocess.call("pacstrap /mnt $(cat pkg_list/gnome_pkges)", shell=True)
+            subprocess.call("sed -i 's/#WaylandEnable=false/WaylandEnable=false/g' /mnt/etc/gdm/custom.conf", shell=True)
         elif desktop == "XFCE":
             subprocess.call("pacstrap /mnt $(cat pkg_list/xfce_pkges)", shell=True)
         elif desktop == "Mate":
