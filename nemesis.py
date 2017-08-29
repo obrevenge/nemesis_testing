@@ -487,40 +487,61 @@ class MyWindow(Gtk.Window):
     def on_p6next_button_clicked(self, widget):
         self.notebook.next_page()
 
-        self.progressbar.set_text("Starting")
+        if part == "Automatic Partitioning":
+            self.progressbar.set_text("Partitioning Disk...")
+            self.progressbar.set_show_text("some_text")
+            self.progressbar.set_fraction(0.1)
+            while Gtk.events_pending():
+                Gtk.main_iteration()
+                subprocess.call("./resources/auto_part.sh", shell=True)
+
+        self.progressbar.set_text("Sorting Fastest Mirrors...")
         self.progressbar.set_show_text("some_text")
-        self.progressbar.set_fraction(0.1)
+        self.progressbar.set_fraction(0.2)
         while Gtk.events_pending():
             Gtk.main_iteration()
-        time.sleep(2)
+        subprocess.call("reflector --verbose -l 50 -p http --sort rate --save /etc/pacman.d/mirrorlist", shell=True)
 
-        self.progressbar.set_text("Continuing")
+        self.progressbar.set_text("Updating Pacman Cache...")
+        self.progressbar.set_show_text("some_text")
+        self.progressbar.set_fraction(0.2)
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        subprocess.call("./resources/update_cache.sh", shell=True)
+        
+
+        self.progressbar.set_text("Installing Base...")
         self.progressbar.set_show_text("some_text")
         self.progressbar.set_fraction(0.3)
         while Gtk.events_pending():
             Gtk.main_iteration()
-        time.sleep(2)
+        subprocess.call("pacstrap /mnt base base-devel", shell=True)
+        subprocess.call("rm -f /mnt/etc/pacman.conf", shell=True)
+        subprocess.call("cp -f /etc/pacman.conf /mnt/etc/pacman.conf", shell=True)
 
-        self.progressbar.set_text("Halfway")
+        self.progressbar.set_text("Generating File System Table...")
+        self.progressbar.set_show_text("some_text")
+        self.progressbar.set_fraction(0.4)
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        subprocess.call("./resources/fstab.sh", shell=True)
+
+        self.progressbar.set_text("Configuring Timezone, Language, Keymap...")
         self.progressbar.set_show_text("some_text")
         self.progressbar.set_fraction(0.5)
         while Gtk.events_pending():
             Gtk.main_iteration()
-        time.sleep(2)
+        subprocess.call("./resources/config.sh", shell=True)
 
-        self.progressbar.set_text("Three Quarters")
+        self.progressbar.set_text("Installing Sound and Video Drivers...")
         self.progressbar.set_show_text("some_text")
-        self.progressbar.set_fraction(0.8)
+        self.progressbar.set_fraction(0.6)
         while Gtk.events_pending():
             Gtk.main_iteration()
-        time.sleep(2)
+        subprocess.call("pacstrap /mnt  mesa xorg-server xorg-apps xorg-xinit xorg-drivers xterm alsa-utils pulseaudio pulseaudio-alsa xf86-input-synaptics xf86-input-keyboard xf86-input-mouse xf86-input-libinput intel-ucode b43-fwcutter networkmanager nm-connection-editor network-manager-applet polkit-gnome gksu ttf-dejavu gnome-keyring xdg-user-dirs gvfs libmtp gvfs-mtp wpa_supplicant dialog iw reflector rsync mlocate bash-completion htop unrar p7zip yad yaourt polkit-gnome lynx wget zenity gksu squashfs-tools ntfs-3g gptfdisk cups ghostscript gsfonts linux-headers dkms broadcom-wl-dkms revenge-lsb-release", shell=True)
+        subprocess.call("./resources/vbox.sh", shell=True)
 
-        self.progressbar.set_text("Finished")
-        self.progressbar.set_show_text("some_text")
-        self.progressbar.set_fraction(1.0)
-        while Gtk.events_pending():
-            Gtk.main_iteration()
-        time.sleep(2)
+
 
 
     def on_cancel_button_clicked(self, widget):

@@ -21,6 +21,9 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Nemesis; If not, see <http://www.gnu.org/licenses/>.
 
+
+source nemesis.conf
+
 # Find total amount of RAM
 	if [[ -d "/sys/firmware/efi/" ]]; then
       SYSTEM="UEFI"
