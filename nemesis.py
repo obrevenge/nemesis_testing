@@ -541,6 +541,52 @@ class MyWindow(Gtk.Window):
         subprocess.call("pacstrap /mnt  mesa xorg-server xorg-apps xorg-xinit xorg-drivers xterm alsa-utils pulseaudio pulseaudio-alsa xf86-input-synaptics xf86-input-keyboard xf86-input-mouse xf86-input-libinput intel-ucode b43-fwcutter networkmanager nm-connection-editor network-manager-applet polkit-gnome gksu ttf-dejavu gnome-keyring xdg-user-dirs gvfs libmtp gvfs-mtp wpa_supplicant dialog iw reflector rsync mlocate bash-completion htop unrar p7zip yad yaourt polkit-gnome lynx wget zenity gksu squashfs-tools ntfs-3g gptfdisk cups ghostscript gsfonts linux-headers dkms broadcom-wl-dkms revenge-lsb-release", shell=True)
         subprocess.call("./resources/vbox.sh", shell=True)
 
+        self.progressbar.set_text("Installing Desktop...")
+        self.progressbar.set_show_text("some_text")
+        self.progressbar.set_fraction(0.7)
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        if desktop == "OBR Openbox":
+            subprocess.call("pacstrap /mnt $(cat pkg_list/obr_pkges)", shell=True)
+        elif desktop == "Gnome":
+            subprocess.call("pacstrap /mnt $(cat pkg_list/gnome_pkges)", shell=True)
+        elif desktop == "XFCE":
+            subprocess.call("pacstrap /mnt $(cat pkg_list/xfce_pkges)", shell=True)
+        elif desktop == "Mate":
+            subprocess.call("pacstrap /mnt $(cat pkg_list/mate_pkges)", shell=True)
+        elif desktop == "KDE PLasma":
+            subprocess.call("pacstrap /mnt $(cat pkg_list/plasma_pkges)", shell=True)
+        elif desktop == "i3":
+            subprocess.call("pacstrap /mnt $(cat pkg_list/i3_pkges)", shell=True)
+        else:
+            print("Error, no desktop match!")
+
+
+        self.progressbar.set_text("Creating New User...")
+        self.progressbar.set_show_text("some_text")
+        self.progressbar.set_fraction(0.8)
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        subprocess.call("./resources/new_user.sh", shell=True)
+
+        self.progressbar.set_text("Finishing Install...")
+        self.progressbar.set_show_text("some_text")
+        self.progressbar.set_fraction(0.9)
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        subprocess.call("./resources/btloader.sh", shell=True)
+
+
+        self.progressbar.set_text("Installation Finished")
+        self.progressbar.set_show_text("some_text")
+        self.progressbar.set_fraction(1.0)
+        while Gtk.events_pending():
+            Gtk.main_iteration()
+        subprocess.call("./resources/finished.sh", shell=True)
+
+
+        
+
 
 
 
