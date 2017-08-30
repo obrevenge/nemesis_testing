@@ -799,8 +799,6 @@ class MyWindow(Gtk.Window):
         btloader = self.btloader_button.get_active()
         print(btloader)
 
-        global btloader
-
         if btloader == True:
             bootloader = 'Yes'
         else:
