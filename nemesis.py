@@ -493,7 +493,7 @@ class MyWindow(Gtk.Window):
             self.progressbar.set_fraction(0.1)
             while Gtk.events_pending():
                 Gtk.main_iteration()
-                subprocess.call("./resources/auto_part.sh", shell=True)
+                subprocess.call(["/home/liveuser/nemesis_testing/resources/auto_part.sh"])
 
         self.progressbar.set_text("Sorting Fastest Mirrors...")
         self.progressbar.set_show_text("some_text")
@@ -507,7 +507,7 @@ class MyWindow(Gtk.Window):
         self.progressbar.set_fraction(0.2)
         while Gtk.events_pending():
             Gtk.main_iteration()
-        subprocess.call("./resources/update_cache.sh", shell=True)
+        subprocess.call("[/home/liveuser/nemesis_testing/resources/update_cache.sh"])
         
 
         self.progressbar.set_text("Installing Base...")
@@ -524,14 +524,14 @@ class MyWindow(Gtk.Window):
         self.progressbar.set_fraction(0.4)
         while Gtk.events_pending():
             Gtk.main_iteration()
-        subprocess.call("./resources/fstab.sh", shell=True)
+        subprocess.call("[/home/liveuser/nemesis_testing/resources/fstab.sh"])
 
         self.progressbar.set_text("Configuring Timezone, Language, Keymap...")
         self.progressbar.set_show_text("some_text")
         self.progressbar.set_fraction(0.5)
         while Gtk.events_pending():
             Gtk.main_iteration()
-        subprocess.call("./resources/config.sh", shell=True)
+        subprocess.call("/home/liveuser/nemesis_testing/resources/config.sh"])
 
         self.progressbar.set_text("Installing Sound and Video Drivers...")
         self.progressbar.set_show_text("some_text")
@@ -539,7 +539,7 @@ class MyWindow(Gtk.Window):
         while Gtk.events_pending():
             Gtk.main_iteration()
         subprocess.call("pacstrap /mnt  mesa xorg-server xorg-apps xorg-xinit xorg-drivers xterm alsa-utils pulseaudio pulseaudio-alsa xf86-input-synaptics xf86-input-keyboard xf86-input-mouse xf86-input-libinput intel-ucode b43-fwcutter networkmanager nm-connection-editor network-manager-applet polkit-gnome gksu ttf-dejavu gnome-keyring xdg-user-dirs gvfs libmtp gvfs-mtp wpa_supplicant dialog iw reflector rsync mlocate bash-completion htop unrar p7zip yad yaourt polkit-gnome lynx wget zenity gksu squashfs-tools ntfs-3g gptfdisk cups ghostscript gsfonts linux-headers dkms broadcom-wl-dkms revenge-lsb-release", shell=True)
-        subprocess.call("./resources/vbox.sh", shell=True)
+        subprocess.call("/home/liveuser/nemesis_testing/resources/vbox.sh"])
 
         self.progressbar.set_text("Installing Desktop...")
         self.progressbar.set_show_text("some_text")
@@ -568,14 +568,14 @@ class MyWindow(Gtk.Window):
         self.progressbar.set_fraction(0.8)
         while Gtk.events_pending():
             Gtk.main_iteration()
-        subprocess.call("./resources/new_user.sh", shell=True)
+        subprocess.call("/home/liveuser/nemesis_testing/resources/new_user.sh"])
 
         self.progressbar.set_text("Finishing Install...")
         self.progressbar.set_show_text("some_text")
         self.progressbar.set_fraction(0.9)
         while Gtk.events_pending():
             Gtk.main_iteration()
-        subprocess.call("./resources/btloader.sh", shell=True)
+        subprocess.call("/home/liveuser/nemesis_testing/resources/btloader.sh"])
 
 
         self.progressbar.set_text("Installation Finished")
@@ -583,7 +583,7 @@ class MyWindow(Gtk.Window):
         self.progressbar.set_fraction(1.0)
         while Gtk.events_pending():
             Gtk.main_iteration()
-        subprocess.call("./resources/finished.sh", shell=True)
+        subprocess.call("/home/liveuser/nemesis_testing/resources/finished.sh"])
 
 
         
