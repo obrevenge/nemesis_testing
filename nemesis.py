@@ -478,7 +478,8 @@ class MyWindow(Gtk.Window):
 
         self.p7box2.pack_start(self.progressbar, True, True, 0)
 
-        self.install_label = Gtk.Label("Installing...\nThank you for Choosing Revenge OS!\n\nInstallation will be finished in a few minutes.")
+        self.install_label = Gtk.Label()
+        self.install_label.set_markup("<big><b>Installing</b></big>\n\nThank you for Choosing Revenge OS!\n\nInstallation will be finished in a few minutes.")
 
         self.p7box1.pack_start(self.install_label, True, True, 0)
 
@@ -487,6 +488,39 @@ class MyWindow(Gtk.Window):
         self.page7.pack_start(self.p7box3, True, True, 0)
 
         self.notebook.append_page(self.page7, Gtk.Label("Intalling"))
+
+        # Ok, I was wrong, this is the last page. beginning page 8...
+
+        self.page8 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+
+        self.p8box1 = Gtk.Box()
+        self.p8box2 = Gtk.Box()
+        self.p8box3 = Gtk.Box()
+        self.p8box4 = Gtk.Box()
+
+        self.finished_label = Gtk.Label()
+        self.finished_label.set_markup("<big>Installation Finished</big>")
+
+        self.finished_button = Gtk.Button("Reboot Now")
+        self.finished_button.connect("clicked", self.installation_finished)
+
+        self.p8box1.pack_start(self.finished_label, True, True, 0)
+        self.p8box3.pack_start(self.finished_button, False, False, 0)
+
+        self.page8.pack_start(self.p8box1, True, True, 0)
+        self.page8.pack_start(self.p8box2, True, True, 0)
+        self.page8.pack_start(self.p8box3, False, False, 0)
+        self.page8.pack_start(self.p8box4, True, True, 0)
+
+        self.notebook.append_page(self.page8, Gtk.Label("Finished"))
+
+
+
+    def installation_finished(self, widget):
+        subprocess.call("sudo reboot", shell=True)
+
+
+
 
 
     def on_p6next_button_clicked(self, widget):
@@ -588,7 +622,7 @@ class MyWindow(Gtk.Window):
         self.progressbar.set_fraction(1.0)
         while Gtk.events_pending():
             Gtk.main_iteration()
-        subprocess.call(["/home/liveuser/nemesis_testing/resources/finished.sh"])
+        self.notebook.next_page()
 
 
         
