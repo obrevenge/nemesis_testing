@@ -21,8 +21,7 @@
 #  You should have received a copy of the GNU General Public License
 #  along with Nemesis; If not, see <http://www.gnu.org/licenses/>.
 
-cd /home/liveuser/nemesis_testing/nemesis.conf
-
+cd /home/liveuser/nemesis_testing/resources
 
 source nemesis.conf
 
