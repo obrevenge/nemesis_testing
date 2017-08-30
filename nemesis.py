@@ -505,11 +505,11 @@ class MyWindow(Gtk.Window):
         self.finished_button.connect("clicked", self.installation_finished)
 
         self.p8box1.pack_start(self.finished_label, True, True, 0)
-        self.p8box3.pack_start(self.finished_button, False, False, 0)
+        self.p8box3.pack_start(self.finished_button, True, False, 0)
 
         self.page8.pack_start(self.p8box1, True, True, 0)
         self.page8.pack_start(self.p8box2, True, True, 0)
-        self.page8.pack_start(self.p8box3, False, False, 0)
+        self.page8.pack_start(self.p8box3, True, False, 0)
         self.page8.pack_start(self.p8box4, True, True, 0)
 
         self.notebook.append_page(self.page8, Gtk.Label("Finished"))
