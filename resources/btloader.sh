@@ -25,6 +25,10 @@ cd /home/liveuser/nemesis_testing/resources
 
 source nemesis.conf
 
+arch_chroot() {
+    arch-chroot /mnt /bin/bash -c "${1}"
+}
+
 grub_device=$dev
 
 

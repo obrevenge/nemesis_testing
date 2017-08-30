@@ -25,8 +25,6 @@ cd /home/liveuser/nemesis_testing/resources
 
 
 
-
-
 source nemesis.conf
 
 
