@@ -29,6 +29,12 @@ arch_chroot() {
     arch-chroot /mnt /bin/bash -c "${1}"
 }
 
+if [[ -d "/sys/firmware/efi/" ]]; then
+      SYSTEM="UEFI"
+      else
+      SYSTEM="BIOS"
+fi
+
 grub_device=$dev
 
 

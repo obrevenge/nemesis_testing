@@ -42,7 +42,7 @@ class MyWindow(Gtk.Window):
         self.set_default_size(800, 500)
         """creating the notebook, main widget of the gui"""
         self.notebook = Gtk.Notebook()
-        self.notebook.set_tab_pos(Gtk.PositionType.LEFT)
+        self.notebook.set_show_tabs(False)
         self.add(self.notebook)
 
         self.page1 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
