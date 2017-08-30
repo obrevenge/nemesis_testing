@@ -79,7 +79,7 @@ else
 
     if [ "$desktop" = "Gnome" ]
     	then sed -i 's/openbox-session/gnome-session/g' /mnt/root/.xinitrc
-    elif [ "$desktop" = "Plasma" ]
+    elif [ "$desktop" = "KDE PLasma" ]
         then sed -i 's/openbox-session/startkde/g' /mnt/root/.xinitrc
     elif [ "$desktop" = "XFCE" ]
         then sed -i 's/openbox-session/startxfce4/g' /mnt/root/.xinitrc
