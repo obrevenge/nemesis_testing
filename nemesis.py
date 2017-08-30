@@ -493,7 +493,7 @@ class MyWindow(Gtk.Window):
             self.progressbar.set_fraction(0.1)
             while Gtk.events_pending():
                 Gtk.main_iteration()
-                subprocess.call(["/home/liveuser/nemesis_testing/resources/auto_part.sh"])
+            subprocess.call(["/home/liveuser/nemesis_testing/resources/auto_part.sh"])
 
         self.progressbar.set_text("Sorting Fastest Mirrors...")
         self.progressbar.set_show_text("some_text")
