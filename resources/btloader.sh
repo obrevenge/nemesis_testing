@@ -24,13 +24,15 @@
 
 source nemesis.conf
 
+grub_device=$dev
+
 
 # running mkinit
 
 arch_chroot "mkinitcpio -p linux"
 
 # installing bootloader
-if [ "$grub" = "yes" ]
+if [ "$grub" = "Yes" ]
     then
         if [ "$SYSTEM" = 'BIOS' ]
             then echo "98"

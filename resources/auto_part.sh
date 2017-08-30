@@ -24,6 +24,10 @@
 
 source nemesis.conf
 
+Parted() {
+	parted --script $dev "$1"
+}
+
 # Find total amount of RAM
 	if [[ -d "/sys/firmware/efi/" ]]; then
       SYSTEM="UEFI"

@@ -44,10 +44,10 @@ echo -e 'Section "InputClass"\n	Identifier "system-keyboard"\n	MatchIsKeyboard "
 
 #setting timezone
 arch_chroot "rm /etc/localtime"
-arch_chroot "ln -s /usr/share/zoneinfo/${zone}/${subzone} /etc/localtime"
+arch_chroot "ln -s /usr/share/zoneinfo/${timezone}/etc/localtime"
 
 #setting hw clock
-arch_chroot "hwclock --systohc --$clock"
+arch_chroot "hwclock --systohc --utc"
 
 #setting hostname
 arch_chroot "echo $hname > /etc/hostname"

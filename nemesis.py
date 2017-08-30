@@ -774,6 +774,8 @@ class MyWindow(Gtk.Window):
             model = self.disk_button.get_model()
             disk = model[tree_iter][0]
             print(disk)
+            dev = disk[5:13]
+            print(dev)
 
         btloader = self.btloader_button.get_active()
         print(btloader)
@@ -785,6 +787,7 @@ class MyWindow(Gtk.Window):
 
         f = open("resources/nemesis.conf", "a")
         f.write( "grub='" + bootloader + "'\n")
+        f.write( "dev='" + dev + "'\n")
 
         f.close()
 
