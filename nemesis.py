@@ -597,6 +597,10 @@ class MyWindow(Gtk.Window):
 
 
     def user_next_page(self, widget):
+        global hname
+        global username
+        global password1
+        global password2
         hname = self.hname_entry.get_text()
         username = self.username_entry.get_text()
         password1 = self.password1_entry.get_text()
@@ -629,6 +633,7 @@ class MyWindow(Gtk.Window):
         tree_iter = self.desktop_button.get_active_iter()
         if tree_iter != None:
             model = self.desktop_button.get_model()
+            global desktop
             desktop = model[tree_iter][0]
             print(desktop)
 
@@ -645,10 +650,12 @@ class MyWindow(Gtk.Window):
         tree_iter = self.desktop_button.get_active_iter()
         if tree_iter != None:
             model = self.desktop_button.get_model()
+            global desktop
             desktop = model[tree_iter][0]
             print(desktop)
 
     def on_btloader_button_toggled(self, widget):
+        global btloader
         btloader = self.btloader_button.get_active()
         print(btloader)
 
@@ -657,6 +664,7 @@ class MyWindow(Gtk.Window):
         tree_iter = self.disk_button.get_active_iter()
         if tree_iter != None:
             model = self.disk_button.get_model()
+            global disk
             disk = model[tree_iter][0]
             print(disk)
 
@@ -674,18 +682,21 @@ class MyWindow(Gtk.Window):
             tz_name_list = [t.text for t in var1]
             tz2 = tz_name_list.index('{}'.format(tz))
             code1 = int(tz2)
+            global locale
             locale = locale_list[code1].format(code1 = code1)
             print(locale)
 
         tree_iter = self.timezone_button.get_active_iter()
         if tree_iter != None:
             model = self.timezone_button.get_model()
+            global timezone
             timezone = model[tree_iter][0]
             print(timezone)
 
         tree_iter = self.keyboard_button.get_active_iter()
         if tree_iter != None:
             model = self.keyboard_button.get_model()
+            global keyboard
             keyboard = model[tree_iter][0]
             print(keyboard)
 
@@ -703,6 +714,7 @@ class MyWindow(Gtk.Window):
         tree_iter = self.keyboard_button.get_active_iter()
         if tree_iter != None:
             model = self.keyboard_button.get_model()
+            global keyboard
             keyboard = model[tree_iter][0]
             print(keyboard)
 
@@ -711,6 +723,7 @@ class MyWindow(Gtk.Window):
         tree_iter = self.timezone_button.get_active_iter()
         if tree_iter != None:
             model = self.timezone_button.get_model()
+            global timezone
             timezone = model[tree_iter][0]
             print(timezone)
 
@@ -730,6 +743,7 @@ class MyWindow(Gtk.Window):
             tz_name_list = [t.text for t in var1]
             tz2 = tz_name_list.index('{}'.format(tz))
             code1 = int(tz2)
+            global locale
             locale = locale_list[code1].format(code1 = code1)
             print(locale)
 
@@ -739,6 +753,7 @@ class MyWindow(Gtk.Window):
         tree_iter = self.part_button.get_active_iter()
         if tree_iter != None:
             model = self.part_button.get_model()
+            global part
             part = model[tree_iter][0]
             print(part)
 
@@ -747,6 +762,7 @@ class MyWindow(Gtk.Window):
         tree_iter = self.typebutton.get_active_iter()
         if tree_iter != None:
             model = self.typebutton.get_model()
+            global install_type
             install_type = model[tree_iter][0]
             print(install_type)
 
@@ -754,6 +770,7 @@ class MyWindow(Gtk.Window):
         tree_iter = self.part_button.get_active_iter()
         if tree_iter != None:
             model = self.part_button.get_model()
+            global part
             part = model[tree_iter][0]
 
         if part == 'Manual Partitioning':
@@ -772,13 +789,17 @@ class MyWindow(Gtk.Window):
         tree_iter = self.disk_button.get_active_iter()
         if tree_iter != None:
             model = self.disk_button.get_model()
+            global disk
             disk = model[tree_iter][0]
             print(disk)
+            global dev
             dev = disk[5:13]
             print(dev)
 
         btloader = self.btloader_button.get_active()
         print(btloader)
+
+        global btloader
 
         if btloader == True:
             bootloader = 'Yes'
@@ -795,6 +816,7 @@ class MyWindow(Gtk.Window):
         tree_iter = self.typebutton.get_active_iter()
         if tree_iter != None:
             model = self.typebutton.get_model()
+            global install_type
             install_type = model[tree_iter][0]
 
         self.notebook.next_page()
