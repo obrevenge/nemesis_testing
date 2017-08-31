@@ -22,7 +22,7 @@
 #  along with Nemesis; If not, see <http://www.gnu.org/licenses/>.
 
 
-cd /home/liveuser/nemesis_testing/resources
+cd /home/liveuser/nemesis/resources
 source nemesis.conf
 
 Parted() {
