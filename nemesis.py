@@ -369,13 +369,18 @@ class MyWindow(Gtk.Window):
 
         # starting page 5
 
-        self.page5 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+        self.page5 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=15)
+        self.page5.set_homogeneous(20)
 
         self.p5box1 = Gtk.Box()
         self.p5box2 = Gtk.Box()
+        self.p5box2.set_homogeneous(20)
         self.p5box3 = Gtk.Box()
+        self.p5box3.set_homogeneous(20)
         self.p5box4 = Gtk.Box()
+        self.p5box4.set_homogeneous(20)
         self.p5box5 = Gtk.Box()
+        self.p5box5.set_homogeneous(20)
         self.p5box6 = Gtk.Box()
 
         self.p5label = Gtk.Label()
