@@ -86,7 +86,7 @@ fi
 
 if [ "$type" = "StationX" ]
     then # setting stationx wallpapers
-        if [ "$desktop" = "Plasma" ]
+        if [ "$desktop" = "KDE Plasma" ]
 		then sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc
 		sed -i 's/Mt_Shadow_Red_Dawn-RevengeOS.png/Mt_Shadow_Red_Dawn-StationX.png/g' /mnt/root/.config/plasma-org.kde.plasma.desktop-appletsrc
 	else
