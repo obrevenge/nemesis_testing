@@ -39,10 +39,11 @@ class MyWindow(Gtk.Window):
     def __init__(self):
         Gtk.Window.__init__(self, title="Nemesis Installer")
         self.set_border_width(3)
-        self.set_default_size(700, 500)
+        self.set_default_size(800, 600)
         """creating the notebook, main widget of the gui"""
         self.notebook = Gtk.Notebook()
-        self.notebook.set_show_tabs(False)
+        self.notebook.set_show_tabs(True)
+        self.notebook.set_tab_pos(0)
         self.add(self.notebook)
 
         self.page1 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
