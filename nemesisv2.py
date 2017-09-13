@@ -37,6 +37,10 @@ import time
 class MyWindow(Gtk.Window):
 
     def __init__(self):
+        #getting current timezone
+        os.system("tzupdate -p > current_timezone.txt")
+
+
         Gtk.Window.__init__(self, title="Nemesis Installer")
         self.set_border_width(3)
         self.set_default_size(900, 600)
@@ -249,15 +253,13 @@ class MyWindow(Gtk.Window):
         self.tz_button.set_active(0)
         self.tz_button.connect("changed", self.on_tz_button_changed)
 
-        os.popen("tzupdate -p > current_timezone.txt")
-
         tree = ET.parse("resources/timezones.xml")
         var4 = tree.findall(".//timezone_name")
         timezone_name_list = [t.text for t in var4]
 
         timezone_store = Gtk.ListStore(str)
 
-        with open('timezone.txt', 'r') as f:
+        with open('current_timezone.txt', 'r') as f:
             timezone_store.append([line.strip() for line in f])
 
         for tz in timezone_name_list:
