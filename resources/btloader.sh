@@ -46,6 +46,7 @@ lts=` cat /home/liveuser/nemesis/pkg_list/packages.txt `
 
 if [ $(echo lts | grep linux-lts) != "" ]
     then arch_chroot "mkinitcpio -p linux-lts"
+fi
 
 # installing bootloader
 if [ "$grub" = "Yes" ]
