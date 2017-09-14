@@ -868,7 +868,7 @@ class MyWindow(Gtk.Window):
         if steam == "Yes":
             subprocess.call("echo 'steam lib32-mesa ttf-liberation lib32-alsa-lib lib32-libpulse lib32-alsa-plugins' >> pkg_list/packages.txt", shell=True)
 
-        if wine == "yes":
+        if wine == "Yes":
             subprocess.call("echo 'wine wine-gecko wine-mono playonlinux lib32-mesa lib32-alsa-lib lib32-libpulse lib32-alsa-plugins' >> pkg_list/packages.txt", shell=True)
 
         if flatpak == "Yes":
