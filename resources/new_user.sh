@@ -105,10 +105,10 @@ cp os-release /mnt/etc/os-release
 if [ "$type" = "Normal" ];then
 
     if [ "$desktop" = "Gnome" ]
-        then arch_chroot "systemctl enable gdm.service"
+        then arch_chroot "systemctl enable gdm-plymouth.service"
     else
         pacstrap /mnt lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings
-        arch_chroot "systemctl enable lightdm.service"
+        arch_chroot "systemctl enable lightdm-plymouth.service"
         echo "theme-name = BlackMATE" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
         echo "background = /usr/share/Wallpaper/Shadow_cast-RevengeOS-v2.png" >> /mnt/etc/lightdm/lightdm-gtk-greeter.conf
     fi
