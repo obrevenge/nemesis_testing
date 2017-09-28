@@ -30,6 +30,12 @@ arch_chroot() {
 }
 
 
+# Setting up plymouth theme to work
+sed -i 's/base udev/base udev plymouth/g' /mnt/etc/mkinitcpio.conf
+
+# Installing plymouth theme
+pacstrap /mnt revenge-plymouth-theme
+
 
 # fix theme for applications running as root
 cp -r /mnt/etc/skel/. /mnt/root/

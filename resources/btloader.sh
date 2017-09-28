@@ -37,13 +37,6 @@ fi
 
 grub_device=$dev
 
-# Setting up plymouth theme to work
-sed -i 's/base udev/base udev plymouth/g' /mnt/etc/mkinitcpio.conf
-
-# Installing plymouth theme
-pacstrap /mnt revenge-plymouth-theme
-
-
 # running mkinit
 
 arch_chroot "mkinitcpio -p linux"
